@@ -6,6 +6,8 @@ using namespace std;
 
 struct SelectStatement
 {
-    char *column;
+    vector<string> *m_pvecColumns;
     //char *table;
+
+    string *m_tableName;
 };

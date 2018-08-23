@@ -65,8 +65,14 @@ using namespace std;
   std::cout << "Syntax error!" << std::endl;  
 }   
 
-program ::= select_stmt(A). { cout << "Parse completed. column = " << A.column << endl; }  
-select_stmt(A) ::= SELECT column_name(B). { 
-    A.column = B ; 
+program ::= select_stmt(A). { cout << "Parse completed. vec[1] = " << A.m_pvecColumns->at(0) << ", table = " << *(A.m_tableName) <<  endl; }  
+select_stmt(A) ::= SELECT column_name(B) FROM table_name(C). { 
+    A.m_pvecColumns = new std::vector<string>();
+    A.m_pvecColumns->push_back(string(B)); 
+    
+    A.m_tableName = new std::string();
+    *(A.m_tableName) = C;
 }
 column_name(A) ::= NAME(B). {A = B;}
+table_name(A) ::= NAME(C). {A = C;}
+

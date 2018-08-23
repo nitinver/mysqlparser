@@ -26,6 +26,8 @@ int main()
 void* pParser = ParseAlloc (malloc);
 Parse (pParser, SELECT, 0);
 Parse (pParser, NAME, "mycol1");
+Parse (pParser, FROM, 0);
+Parse (pParser, NAME, "mytable");
 Parse (pParser, 0, 0);
 ParseFree(pParser, free );
 }
