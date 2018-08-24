@@ -4,23 +4,49 @@
 
 using namespace std;
 
-struct SelectStatement
-{
-    vector<string> *m_pvecColumns;
-    //char *table;
+struct ListNode{
+     string val;
+    ListNode *next;
 
-    string *m_tableName;
+    ListNode(const string &name): val(name), next(nullptr)
+    {
+    }
+
+    ListNode(const string &name, ListNode* next): val(name), next(next)
+    {
+    }
 };
 
-/*
-void InitializeSelect(SelectStatement &A)
+ListNode* AddNode(ListNode *head, string name)
 {
-    A.m_pvecColumns = new std::vector<string>;
-    A.m_tableName = new std::string();
+    // Set up the new node.
+    ListNode *node = new ListNode(name);
+
+    node->next = head;
+
+    return node;
 }
 
-void SetTableName(SelectStatement &A, string &B)
+void PrintList(const ListNode *head)
 {
-    A.m_tableName = B;
+    cout << "-------------------";
+    cout << "Printing the List:";
+    cout << "-------------------";
+
+    while(head != nullptr)
+    {
+        cout << head->val << ", ";
+        head = head->next;
+    }
 }
-*/
+
+struct SelectStatement
+{
+    ListNode *m_pColListHead; 
+
+    //vector<string> *m_pvecColumns;
+    //char *table;
+
+    char *m_tableName;
+};
+
