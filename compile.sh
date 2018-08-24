@@ -26,6 +26,8 @@ int main()
 void* pParser = ParseAlloc (malloc);
 Parse (pParser, SELECT, 0);
 Parse (pParser, NAME, "mycol1");
+Parse (pParser, COMMA, 0);
+Parse (pParser, NAME, "mycol2");
 Parse (pParser, FROM, 0);
 Parse (pParser, NAME, "mytable");
 Parse (pParser, 0, 0);
@@ -34,4 +36,4 @@ ParseFree(pParser, free );
 
 EOF
 
-g++ select2.c -fpermissive -o select2
+g++ -std=c++11 -ggdb select2.c -fpermissive -o select2

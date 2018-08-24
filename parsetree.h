@@ -11,3 +11,16 @@ struct SelectStatement
 
     string *m_tableName;
 };
+
+/*
+void InitializeSelect(SelectStatement &A)
+{
+    A.m_pvecColumns = new std::vector<string>;
+    A.m_tableName = new std::string();
+}
+
+void SetTableName(SelectStatement &A, string &B)
+{
+    A.m_tableName = B;
+}
+*/
