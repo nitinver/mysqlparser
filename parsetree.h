@@ -5,7 +5,7 @@
 using namespace std;
 
 struct ListNode{
-     string val;
+    string val;
     ListNode *next;
 
     ListNode(const string &name): val(name), next(nullptr)
@@ -27,18 +27,28 @@ ListNode* AddNode(ListNode *head, string name)
     return node;
 }
 
-void PrintList(const ListNode *head)
+void PrintList(const ListNode *head, const char* msg)
 {
-    cout << "-------------------";
-    cout << "Printing the List:";
-    cout << "-------------------";
+    cout << "\n-------------------\n";
+    cout << msg;
+    cout << "\n-------------------\n";
 
     while(head != nullptr)
     {
         cout << head->val << ", ";
         head = head->next;
     }
+
+    cout << endl;
 }
+
+/*
+struct LimitClause
+{
+    bool m_isLimit;
+    int m_numRows;
+};
+*/
 
 struct SelectStatement
 {
@@ -48,5 +58,9 @@ struct SelectStatement
     //char *table;
 
     char *m_tableName;
+
+    // struct LimitClause m_limit;
+
+    int *m_pLimit;
 };
 

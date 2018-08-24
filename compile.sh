@@ -28,10 +28,25 @@ Parse (pParser, SELECT, 0);
 Parse (pParser, NAME, "mycol1");
 Parse (pParser, COMMA, 0);
 Parse (pParser, NAME, "mycol2");
+Parse (pParser, COMMA, 0);
+Parse (pParser, NAME, "mycol3");
 Parse (pParser, FROM, 0);
 Parse (pParser, NAME, "mytable");
 Parse (pParser, 0, 0);
 ParseFree(pParser, free );
+
+pParser = ParseAlloc (malloc);
+Parse (pParser, SELECT, 0);
+Parse (pParser, NAME, "mycol1");
+Parse (pParser, COMMA, 0);
+Parse (pParser, NAME, "mycol2");
+Parse (pParser, FROM, 0);
+Parse (pParser, NAME, "mytable");
+Parse (pParser, LIMIT, 0);
+Parse (pParser, NUM, "10");
+Parse (pParser, 0, 0);
+ParseFree(pParser, free );
+
 }
 
 EOF
