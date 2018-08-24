@@ -1,46 +1,6 @@
-/* Copyright (GPL) 2004 mchirico@users.sourceforge.net or mchirico@comcast.net
-
-  Simple lemon parser  example.
-
-  
-    $ ./lemon example1.y                          
-
-  The above statement will create example1.c.
-
-  The command below  adds  main and the
-  necessary "Parse" calls to the
-  end of this example1.c.
-
-
-    $ cat <<EOF >>example1.c                      
-    int main()                                    
-    {                                             
-      void* pParser = ParseAlloc (malloc);        
-      Parse (pParser, INTEGER, 1);                
-      Parse (pParser, PLUS, 0);                   
-      Parse (pParser, INTEGER, 2);                
-      Parse (pParser, 0, 0);                      
-      ParseFree(pParser, free );                  
-     }                                            
-    EOF                                           
-            
-
-     $ g++ -o ex1 example1.c                                      
-     $ ./ex1
-
-  See the Makefile, as most all of this is
-  done automatically.
-  
-  Downloads:
-  http://prdownloads.sourceforge.net/souptonuts/lemon_examples.tar.gz?download
-
+/* 
+    License and Copyright:  To be determined.
 */
-
- 
-/*  
-%left PLUS MINUS.   
-%left DIVIDE TIMES.  
-*/  
 
 
 %include {   
@@ -65,45 +25,45 @@ SelectStatement selStmt;
 
 %type column_name {char *}
 
-%type column_list {vector<string> *}
+%type column_list {ListNode *}
 
 %syntax_error {  
   std::cout << "Syntax error!" << std::endl;  
 }   
 
-//program ::= select_stmt(A). { cout << "Parse completed. vec[1] = " << A.m_pvecColumns->at(0) << ", table = " << *(A.m_tableName) <<  endl; }  
-program ::= select_stmt. { 
-    cout << "Parse completed. col[0] = " 
-         << selStmt.m_pvecColumns->at(0) << ", col[1] = " 
-         << selStmt.m_pvecColumns->at(1) << "  table = " 
-         << *(selStmt.m_tableName) 
-         <<  endl; 
+program ::= select_stmt(A). { 
 
-    copy(selStmt.m_pvecColumns->begin(), selStmt.m_pvecColumns->end(), ostream_iterator<string>(cout, ", "));
+    cout << "Parse completed.";
+
+    PrintList(A.m_pColListHead);
+
+    cout  << "Table = " << A.m_tableName <<  endl; 
     cout << endl;
-
-}  
-select_stmt ::= SELECT column_list FROM table_name(C). { 
-
-    selStmt.m_tableName = new std::string();
-    *(selStmt.m_tableName) = C;
 }
-column_list ::= column_list COMMA column_name(A).  {
-                if(selStmt.m_pvecColumns == nullptr)
-                {
-                    selStmt.m_pvecColumns = new vector<string>();
-                }
-                selStmt.m_pvecColumns->push_back(string(A));
-            }
-column_list ::= column_name(A). {
-                if(selStmt.m_pvecColumns == nullptr)
-                {
-                    selStmt.m_pvecColumns = new vector<string>();
-                }
-                selStmt.m_pvecColumns->push_back(string(A));
-            }
+
+select_stmt(A) ::= SELECT column_list(B) FROM table_name(C). { 
+
+    A.m_tableName = C;
+    A.m_pColListHead = B;
+}
+
+column_list(A) ::= column_name(C) COMMA column_list(B). {
+
+ //   A = AddNode(string(C), A);
+    
+    A = new ListNode(string(C), B);
+
+}
+
+column_list(A) ::= column_name(B). {
+
+    A = new ListNode(string(B));
+
+ //   A = AddNode(A, string(B));
+}
 
 
 column_name(A) ::= NAME(B). {A = B;}
+
 table_name(A) ::= NAME(C). {A = C;}
 
