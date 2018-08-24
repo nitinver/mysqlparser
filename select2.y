@@ -72,7 +72,17 @@ SelectStatement selStmt;
 }   
 
 //program ::= select_stmt(A). { cout << "Parse completed. vec[1] = " << A.m_pvecColumns->at(0) << ", table = " << *(A.m_tableName) <<  endl; }  
-program ::= select_stmt. { cout << "Parse completed. col[0] = " << selStmt.m_pvecColumns->at(0) << ", col[1] = " << selStmt.m_pvecColumns->at(1) << "  table = " << *(selStmt.m_tableName) <<  endl; }  
+program ::= select_stmt. { 
+    cout << "Parse completed. col[0] = " 
+         << selStmt.m_pvecColumns->at(0) << ", col[1] = " 
+         << selStmt.m_pvecColumns->at(1) << "  table = " 
+         << *(selStmt.m_tableName) 
+         <<  endl; 
+
+    copy(selStmt.m_pvecColumns->begin(), selStmt.m_pvecColumns->end(), ostream_iterator<string>(cout, ", "));
+    cout << endl;
+
+}  
 select_stmt ::= SELECT column_list FROM table_name(C). { 
 
     selStmt.m_tableName = new std::string();
