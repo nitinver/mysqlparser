@@ -50,17 +50,29 @@ struct LimitClause
 };
 */
 
+struct Predicate
+{
+    string key;
+    string value;
+    string op;
+
+    void Print()
+    {
+        cout << "Predicate: key = " << key;
+        cout << ", Value = " << value;
+        cout << ", op = " << op;
+        cout << endl;
+    }
+};
+
 struct SelectStatement
 {
     ListNode *m_pColListHead; 
 
-    //vector<string> *m_pvecColumns;
-    //char *table;
-
     char *m_tableName;
 
-    // struct LimitClause m_limit;
-
     int *m_pLimit;
+
+    Predicate *m_predicate;
 };
 

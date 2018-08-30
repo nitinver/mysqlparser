@@ -1,1 +1,3 @@
-select c1,c2,c3 from table
+//select c1,c2,c3 from table;
+
+select c1,c2,c3 from table where c1>20 limit 10;
